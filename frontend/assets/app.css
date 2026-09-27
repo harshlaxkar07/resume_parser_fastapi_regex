@@ -1,0 +1,37 @@
+/* Resume Parser — project styling on top of the shared UI system. */
+:root { --accent-h: 14; --accent-s: 84%; --accent-l: 56%; }
+
+.conn {
+  display: flex; align-items: center; gap: 8px;
+  font-size: .78rem; color: var(--text-muted);
+  padding: 7px 10px; border-radius: var(--radius-sm); background: var(--surface-2);
+}
+.conn .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-dim); flex: 0 0 7px; }
+.conn.online .dot { background: var(--ok); box-shadow: 0 0 0 3px var(--ok-soft); }
+.conn.offline .dot { background: var(--danger); box-shadow: 0 0 0 3px var(--danger-soft); }
+
+.cov-row { display: flex; align-items: center; gap: 12px; margin-bottom: 11px; }
+.cov-row:last-child { margin-bottom: 0; }
+.cov-name { font-size: .84rem; font-weight: 540; min-width: 104px; text-transform: capitalize; }
+.cov-bar { flex: 1; }
+.cov-pct { font-size: .78rem; color: var(--text-dim); font-variant-numeric: tabular-nums; min-width: 38px; text-align: right; }
+
+.cand-cell { display: flex; align-items: center; gap: 11px; min-width: 0; }
+.cand-cell .ci { min-width: 0; }
+.cand-cell .cn { font-weight: 570; }
+.cand-cell .ce { font-size: .76rem; color: var(--text-dim); }
+
+.section { margin-bottom: 20px; }
+.section:last-child { margin-bottom: 0; }
+.section h4 {
+  font-size: .73rem; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--text-dim); font-weight: 640; margin-bottom: 9px;
+  display: flex; align-items: center; gap: 7px;
+}
+.section h4 svg { width: 14px; height: 14px; color: var(--accent); }
+
+.bullets { margin: 0; padding-left: 19px; display: flex; flex-direction: column; gap: 6px; font-size: .86rem; color: var(--text-muted); }
+.bullets li::marker { color: var(--accent); }
+
+.edit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+.edit-grid .full { grid-column: 1 / -1; }

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resume Parser</title>
+<meta name="description" content="Console for the rule-based resume parser API — upload PDFs, review the fields matched by the extractor, and correct them in place.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/ui.css">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ctext y='19' font-size='20'%3E%F0%9F%93%8B%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<div class="app">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark" data-icon="fileText" data-size="18"></div>
+      <div class="brand-text">
+        <div class="brand-name">Resume Parser</div>
+        <div class="brand-sub">Pattern Extraction</div>
+      </div>
+    </div>
+
+    <nav class="nav">
+      <div class="nav-label">Workspace</div>
+      <a class="nav-item" data-nav="overview" href="#overview"><span data-icon="grid" data-size="17"></span> Overview</a>
+      <a class="nav-item" data-nav="upload" href="#upload"><span data-icon="upload" data-size="17"></span> Upload</a>
+      <a class="nav-item" data-nav="resumes" href="#resumes"><span data-icon="users" data-size="17"></span> Résumés <span class="count" data-count="res">—</span></a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="conn" id="conn"><span class="dot"></span><span class="conn-text">Checking API...</span></div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <button class="btn btn-ghost btn-icon menu-btn" data-icon="menu" data-size="19" aria-label="Open navigation"></button>
+      <h1 data-page-title>Overview</h1>
+      <div class="spacer"></div>
+      <button class="btn btn-ghost btn-icon" id="refresh" title="Reload" data-icon="refresh" data-size="18"></button>
+      <button class="btn btn-ghost btn-icon" data-theme-toggle></button>
+    </header>
+
+    <div class="content">
+
+      <section class="page" data-page="overview" data-title="Overview">
+        <div class="page-head">
+          <h2>Extraction at a glance</h2>
+          <p>Each résumé is read with PyMuPDF, cleaned, and matched against a set of patterns that pull out contact details, skills, education, experience, projects, certifications and languages.</p>
+        </div>
+
+        <div class="grid cols-4 mb-3" id="stats"></div>
+
+        <div class="grid cols-2">
+          <div class="card">
+            <div class="card-head">
+              <h3>Field coverage</h3>
+              <p>How often each field is matched across the collection.</p>
+            </div>
+            <div class="card-body" id="coverage"></div>
+          </div>
+          <div class="card">
+            <div class="card-head"><h3>Most common skills</h3></div>
+            <div class="card-body" id="topSkills"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" data-page="upload" data-title="Upload">
+        <div class="page-head">
+          <h2>Parse a résumé</h2>
+          <p>Drop in a PDF. The text is extracted and the pattern set runs over it immediately, so the structured result comes back in the same request.</p>
+        </div>
+
+        <div class="grid cols-2">
+          <div class="stack">
+            <div class="card">
+              <div class="card-body">
+                <div class="dropzone" id="dropzone">
+                  <div class="dropzone-icon" data-icon="upload" data-size="22"></div>
+                  <div class="dropzone-title">Drop PDF résumés here</div>
+                  <div class="dropzone-hint">or click to browse &mdash; several at a time is fine</div>
+                  <input type="file" accept="application/pdf" multiple>
+                </div>
+                <div id="queue" class="stack mt-2"></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-head"><h3>What the extractor looks for</h3></div>
+              <div class="card-body">
+                <div class="tag-list" id="fieldTags"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <h3>Latest result</h3>
+              <p>The fields matched in the most recent upload.</p>
+            </div>
+            <div class="card-body" id="latest">
+              <div class="empty">
+                <div class="empty-icon" data-icon="fileText" data-size="24"></div>
+                <h3>Nothing parsed yet</h3>
+                <p>Upload a résumé and the matched fields will appear here.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" data-page="resumes" data-title="Résumés">
+        <div class="page-head">
+          <h2>Parsed résumés</h2>
+          <p>Every résumé in the collection. Open one to review what was matched, and correct any field in place.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div class="search-input">
+              <span data-icon="search" data-size="16"></span>
+              <input class="input" id="filter" placeholder="Filter by name, email or filename...">
+            </div>
+            <div class="spacer"></div>
+            <span class="badge" id="badge">—</span>
+          </div>
+          <div id="table"></div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<script src="assets/ui.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
